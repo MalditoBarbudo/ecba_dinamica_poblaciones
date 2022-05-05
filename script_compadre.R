@@ -14,6 +14,7 @@ library(ggplot2)
 # Obtener la última versión de compadre -----------------------------------------------------------------
 # guardar la bd
 compadre_db <- cdb_fetch('compadre')
+comadre_db <- cdb_fetch('comadre')
 # comprobar que tenemos lo que queremos
 compadre_db
 names(compadre_db)
@@ -36,6 +37,8 @@ compadre_primula_spain <- subset(
 compadre_primula_spain$SpeciesAccepted
 compadre_primula_spain$Country
 
+# Para ver toda la información
+View(compadre_primula_spain@data)
 
 # Extraer matrices --------------------------------------------------------------------------------------
 # Podemos sacar matrices de población

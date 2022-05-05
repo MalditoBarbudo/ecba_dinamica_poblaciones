@@ -3,7 +3,7 @@ title: "Acceso compadre y GBIF desde R"
 subtitle: "Estudio de Casos Biología Ambiental"
 author: "Víctor Granda"
 institute: "Ecosystem Modelling Facility (CREAF)"
-date: "2021/05/13"
+date: "2022/05/05"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -12,6 +12,8 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
 ---
 layout: false
 class: inverse
@@ -47,14 +49,12 @@ usarlas
 
 ```{r, eval = FALSE}
 install.packages('Rcompadre')
-install.packages('sf')
 install.packages('dplyr')
 install.packages('ggplot2')
 
 # Ahora cargamos los paquetes
 library(Rcompadre)
 library(popdemo)
-library(sf)
 library(dplyr)
 library(ggplot2)
 ```
@@ -147,6 +147,9 @@ compadre_primula_spain <- subset(
 # comprobamos que, efectivamente, solo tenemos datos para Primula en España
 compadre_primula_spain$SpeciesAccepted
 compadre_primula_spain$Country
+
+# Para ver toda la información
+View(compadre_primula_spain@data)
 ```
 
 ---
@@ -182,7 +185,7 @@ class: .code80
 
 # Compadre en R
 
-```{r}
+```{r, fig.align='center', fig.width=7, fig.height=4}
 # todas a la vez:
 hist(primula_lambdas)
 ```
