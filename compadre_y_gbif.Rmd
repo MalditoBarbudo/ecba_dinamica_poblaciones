@@ -3,7 +3,7 @@ title: "Acceso compadre y GBIF desde R"
 subtitle: "Estudio de Casos Biología Ambiental"
 author: "Víctor Granda"
 institute: "Ecosystem Modelling Facility (CREAF)"
-date: "2022/05/05"
+date: "2023/05/17"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -28,7 +28,7 @@ options(htmltools.dir.version = FALSE)
 
 # Com(p)adre
 
-COM(P)ADRE es un repositorio onine de modelos de matrices poblacionales, así como
+COM(P)ADRE es un repositorio online de modelos de matrices poblacionales, así como
 metadatos de plantas, animales, bacterias, virus, algas y hongos.
 
 Se separa en dos bases de datos, COMADRE para animales, bacterias y virus, y 
@@ -149,7 +149,7 @@ compadre_primula_spain$SpeciesAccepted
 compadre_primula_spain$Country
 
 # Para ver toda la información
-View(compadre_primula_spain@data)
+# View(compadre_primula_spain@data)
 ```
 
 ---
@@ -244,8 +244,8 @@ class: .code80
 
 ```{r, fig.width=7, fig.height=4, fig.align='center'}
 # Otra forma
-transposed_data %>% 
-  tidyr::pivot_longer(cols = A1:A4, 'Estadío') %>%
+transposed_data |>
+  tidyr::pivot_longer(cols = A1:A4, names_to = 'Estadío') |>
   ggplot(aes(x = cycle, y = value, color = Estadío)) +
   geom_line()
 ```
@@ -278,19 +278,19 @@ class: .code80
 # Acceso a la base de datos GBIF ------------------------------------------------------------------------
 # Primer paso es instalar los paquetes si no los tenemos instalados
 install.packages('spocc')
-install.packages('mapr')
+install.packages('leaflet')
 
 # Ahora cargamos los paquetes
 library(spocc)
-library(mapr)
 library(dplyr)
+library(leaflet)
 ```
 
 ```{r echo = FALSE}
 # Ahora cargamos los paquetes
 library(spocc)
-library(mapr)
 library(dplyr)
+library(leaflet)
 ```
 
 ---
@@ -311,15 +311,11 @@ class: .code80
 
 ```{r, fig.width=7, fig.height=4, fig.align='center'}
 # Plotear el mapa ---------------------------------------------------------------------------------------
-map_ggplot(primula_gbif, map = "world")
-```
-
----
-class: .code80
-
-# GBIF en R
-
-```{r, fig.width=7, fig.height=4, fig.align='center'}
-# Plotear el mapa ---------------------------------------------------------------------------------------
-map_leaflet(primula_gbif)
+primula_gbif$gbif$data$Primula_vulgaris |>
+  sf::st_as_sf(coords = c("longitude", "latitude"), crs = 4326) |>
+  leaflet(
+    
+  ) |>
+  addTiles() |>
+  addMarkers()
 ```
